@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Joey Samowitz — Financial Services Policy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,800;1,400;1,600&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --navy:#0d1f3c;--navy-mid:#162d52;--navy-light:#1e3d6e;
+      --gold:#c9a84c;--gold-light:#e4c97a;--gold-pale:#f5e9c8;
+      --cream:#faf7f2;--warm-white:#fffef9;
+      --text-dark:#1a1a2e;--text-mid:#4a4a6a;--text-light:#8888aa;--rule:#d8d1c1;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text-dark);overflow-x:hidden;}
+
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(13,31,60,.97);backdrop-filter:blur(12px);border-bottom:1px solid rgba(201,168,76,.2);padding:0 2.5rem;height:64px;display:flex;align-items:center;justify-content:space-between;}
+    .nav-logo{font-family:'Playfair Display',serif;font-weight:800;font-size:1.1rem;color:var(--gold-light);text-decoration:none;letter-spacing:.03em;}
+    .nav-logo span{color:rgba(255,255,255,.4);font-weight:400;font-style:italic;font-size:.85rem;margin-left:.5rem;}
+    .nav-links{display:flex;gap:2rem;list-style:none;}
+    .nav-links a{color:rgba(255,255,255,.6);text-decoration:none;font-size:.78rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;transition:color .2s;}
+    .nav-links a:hover{color:var(--gold-light);}
+
+    .masthead{background:var(--navy);padding-top:64px;}
+    .masthead-inner{max-width:1200px;margin:0 auto;padding:3.5rem 2.5rem 0;}
+    .masthead-flag{display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;animation:fadeUp .8s ease both;}
+    .flag-badge{background:var(--gold);color:var(--navy);padding:3px 10px;font-weight:700;font-size:.68rem;letter-spacing:.15em;}
+    .flag-sep{color:rgba(255,255,255,.25);}
+    .flag-text{color:rgba(255,255,255,.45);}
+    h1.masthead-title{font-family:'Playfair Display',serif;font-size:clamp(2.5rem,5vw,4.8rem);font-weight:900;line-height:.95;color:#fff;letter-spacing:-.03em;margin-bottom:1.2rem;animation:fadeUp .8s .1s ease both;}
+    h1.masthead-title em{color:var(--gold-light);font-style:italic;}
+    .masthead-deck{font-family:'Libre Baskerville',serif;font-size:clamp(.95rem,1.4vw,1.15rem);font-style:italic;color:rgba(255,255,255,.65);max-width:680px;line-height:1.6;margin-bottom:2rem;animation:fadeUp .8s .2s ease both;}
+    .masthead-meta{display:flex;gap:2rem;flex-wrap:wrap;padding:1.2rem 0;border-top:1px solid rgba(201,168,76,.18);font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.4);animation:fadeUp .8s .3s ease both;}
+    .masthead-meta strong{color:rgba(255,255,255,.7);font-weight:600;}
+
+    .ticker{background:var(--gold);padding:.55rem 0;overflow:hidden;white-space:nowrap;}
+    .ticker-track{display:inline-block;animation:ticker 30s linear infinite;}
+    .ticker-item{display:inline-block;font-size:.68rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--navy);padding:0 2rem;}
+    .ticker-sep{color:rgba(13,31,60,.3);}
+
+    /* Featured works */
+    .works-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:3px;background:rgba(13,31,60,.1);}
+    @media(max-width:1100px){.works-grid{grid-template-columns:1fr 1fr;}}
+    @media(max-width:700px){.works-grid{grid-template-columns:1fr;}}
+    .work-card{background:var(--warm-white);display:flex;flex-direction:column;position:relative;overflow:hidden;}
+    .work-bar{position:absolute;top:0;left:0;right:0;height:4px;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform .35s ease;z-index:2;}
+    .work-card:hover .work-bar{transform:scaleX(1);}
+
+    /* Preview frame */
+    .preview-frame{position:relative;height:320px;overflow:hidden;cursor:pointer;background:var(--navy);}
+    .preview-frame iframe{width:200%;height:640px;border:none;transform:scale(.5);transform-origin:top left;pointer-events:none;}
+    .preview-frame.light{background:#f5f0e8;}
+    .preview-overlay{position:absolute;inset:0;z-index:3;display:flex;align-items:flex-end;padding:1.4rem;background:linear-gradient(to top,rgba(13,31,60,.82) 0%,rgba(13,31,60,.15) 55%,transparent 100%);transition:background .3s;}
+    .work-card:hover .preview-overlay{background:linear-gradient(to top,rgba(13,31,60,.65) 0%,rgba(13,31,60,.05) 55%,transparent 100%);}
+    .preview-frame.light .preview-overlay{background:linear-gradient(to top,rgba(13,31,60,.75) 0%,rgba(13,31,60,.1) 55%,transparent 100%);}
+    .open-btn{display:inline-flex;align-items:center;gap:.5rem;background:var(--gold);color:var(--navy);padding:.5rem 1.1rem;font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .2s;text-decoration:none;}
+    .open-btn:hover{background:var(--gold-light);}
+
+    .work-body{padding:1.8rem 2rem;display:flex;flex-direction:column;flex:1;}
+    .work-eyebrow{display:flex;align-items:center;gap:.65rem;margin-bottom:.9rem;flex-wrap:wrap;}
+    .work-tag{font-size:.63rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);background:rgba(201,168,76,.1);padding:.2rem .55rem;border:1px solid rgba(201,168,76,.28);}
+    .work-format{font-size:.63rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-light);}
+    .work-date{font-size:.66rem;color:var(--text-light);margin-left:auto;}
+    .work-title{font-family:'Playfair Display',serif;font-size:1.25rem;font-weight:700;color:var(--navy);line-height:1.2;margin-bottom:.8rem;letter-spacing:-.01em;}
+    .work-desc{font-family:'Libre Baskerville',serif;font-size:.85rem;color:var(--text-mid);line-height:1.7;flex:1;}
+    .work-footer{display:flex;align-items:center;justify-content:space-between;margin-top:1.5rem;padding-top:1rem;border-top:1px solid rgba(13,31,60,.08);}
+    .work-cta{font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);cursor:pointer;transition:letter-spacing .2s;}
+    .work-card:hover .work-cta{letter-spacing:.16em;}
+    .interactive-badge{font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;background:var(--navy);color:var(--gold-light);padding:.2rem .55rem;font-weight:600;}
+
+    /* More analysis */
+    .analysis-section{padding:5rem 0;background:var(--warm-white);}
+    .container{max-width:1200px;margin:0 auto;padding:0 2.5rem;}
+    .section-label{font-size:.67rem;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);margin-bottom:.9rem;display:flex;align-items:center;gap:.7rem;}
+    .section-label::before{content:'';display:block;width:1.5rem;height:1px;background:var(--gold);}
+    h2.section-title{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,3vw,2.5rem);font-weight:800;color:var(--navy);line-height:1.15;margin-bottom:2.5rem;}
+    .posts-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:rgba(13,31,60,.08);}
+    .post-card{background:var(--cream);padding:1.8rem;text-decoration:none;color:inherit;position:relative;transition:background .2s;display:block;}
+    .post-card::before{content:'';position:absolute;top:0;left:0;width:0;height:3px;background:var(--gold);transition:width .3s;}
+    .post-card:hover::before{width:100%;}
+    .post-card:hover{background:#fff;}
+    .post-meta{display:flex;align-items:center;gap:.65rem;margin-bottom:.85rem;}
+    .post-tag{font-size:.63rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);background:rgba(201,168,76,.1);padding:.18rem .5rem;}
+    .post-date{font-size:.68rem;color:var(--text-light);}
+    .post-title{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:var(--navy);line-height:1.3;margin-bottom:.6rem;}
+    .post-excerpt{font-size:.8rem;color:var(--text-mid);line-height:1.65;font-family:'Libre Baskerville',serif;}
+    .post-read{margin-top:1rem;font-size:.68rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);}
+
+    /* Topics */
+    .topics-section{padding:5rem 0;background:var(--navy);position:relative;overflow:hidden;}
+    .topics-section::before{content:'';position:absolute;inset:0;background-image:repeating-linear-gradient(0deg,transparent,transparent 59px,rgba(201,168,76,.03) 59px,rgba(201,168,76,.03) 60px),repeating-linear-gradient(90deg,transparent,transparent 59px,rgba(201,168,76,.03) 59px,rgba(201,168,76,.03) 60px);}
+    .topics-section .section-title{color:#fff;}
+    .topics-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5px;background:rgba(201,168,76,.12);margin-top:2.5rem;}
+    .topic-tile{background:var(--navy);padding:2rem;transition:background .25s;}
+    .topic-tile:hover{background:var(--navy-mid);}
+    .topic-icon{font-size:1.6rem;color:var(--gold);margin-bottom:.75rem;}
+    .topic-name{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:#fff;margin-bottom:.5rem;}
+    .topic-desc{font-size:.78rem;color:rgba(255,255,255,.45);line-height:1.6;}
+
+    /* About */
+    .about-section{padding:5rem 0;background:var(--cream);}
+    .about-grid{display:grid;grid-template-columns:3fr 2fr;gap:4rem;align-items:start;}
+    .about-text p{font-family:'Libre Baskerville',serif;font-size:.93rem;line-height:1.85;color:var(--text-mid);margin-bottom:1.1rem;}
+    .about-text p strong{color:var(--navy);}
+    .about-creds{background:var(--navy);padding:2rem;}
+    .creds-title{font-size:.63rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:1.2rem;}
+    .cred-item{padding:.7rem 0;border-bottom:1px solid rgba(201,168,76,.12);}
+    .cred-item:last-child{border-bottom:none;}
+    .cred-role{font-size:.79rem;font-weight:600;color:#fff;margin-bottom:.15rem;}
+    .cred-org{font-size:.71rem;color:rgba(255,255,255,.42);}
+    .cred-year{font-size:.65rem;color:var(--gold);margin-top:.12rem;}
+
+    /* Subscribe */
+    .subscribe-section{background:var(--gold-pale);border-top:3px solid var(--gold);padding:4.5rem 0;}
+    .subscribe-inner{max-width:540px;margin:0 auto;text-align:center;}
+    .subscribe-inner h2{font-family:'Playfair Display',serif;font-size:2rem;font-weight:800;color:var(--navy);margin-bottom:.6rem;}
+    .subscribe-inner p{font-family:'Libre Baskerville',serif;font-size:.88rem;color:var(--text-mid);line-height:1.7;margin-bottom:1.8rem;}
+    .sub-form{display:flex;max-width:420px;margin:0 auto;}
+    .sub-form input{flex:1;padding:.82rem 1rem;border:2px solid var(--navy);background:#fff;font-family:'DM Sans',sans-serif;font-size:.88rem;color:var(--navy);outline:none;}
+    .sub-form input::placeholder{color:var(--text-light);}
+    .sub-form button{padding:.82rem 1.5rem;background:var(--navy);color:var(--gold-light);border:none;font-family:'DM Sans',sans-serif;font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;transition:background .2s;}
+    .sub-form button:hover{background:var(--navy-light);}
+
+    footer{background:var(--navy);padding:2.5rem;display:flex;align-items:center;justify-content:space-between;border-top:1px solid rgba(201,168,76,.18);}
+    .footer-logo{font-family:'Playfair Display',serif;font-size:1rem;font-weight:800;color:var(--gold-light);}
+    .footer-copy{font-size:.7rem;color:rgba(255,255,255,.28);letter-spacing:.05em;}
+    .footer-socials{display:flex;gap:1.2rem;}
+    .footer-socials a{color:rgba(255,255,255,.38);text-decoration:none;font-size:.72rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;transition:color .2s;}
+    .footer-socials a:hover{color:var(--gold-light);}
+
+
+
+    @keyframes fadeUp{from{opacity:0;transform:translateY(26px);}to{opacity:1;transform:translateY(0);}}
+    @keyframes ticker{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+    .reveal{opacity:0;transform:translateY(20px);transition:opacity .65s ease,transform .65s ease;}
+    .reveal.visible{opacity:1;transform:translateY(0);}
+
+    @media(max-width:900px){
+      .posts-grid{grid-template-columns:1fr 1fr;}
+      .topics-grid{grid-template-columns:1fr 1fr;}
+      .about-grid{grid-template-columns:1fr;gap:2rem;}
+      footer{flex-direction:column;gap:1rem;text-align:center;}
+    }
+    @media(max-width:600px){
+      nav{padding:0 1.2rem;}
+      .nav-links{gap:1rem;}
+      .nav-links li:nth-child(n+4){display:none;}
+      .posts-grid{grid-template-columns:1fr;}
+      .topics-grid{grid-template-columns:1fr;}
+      .sub-form{flex-direction:column;}
+      .preview-frame iframe{width:150%;height:480px;transform:scale(.667);}
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="#">The Ledger <span>Financial Services Policy</span></a>
+  <ul class="nav-links">
+    <li><a href="#works">Work</a></li>
+    <li><a href="#analysis">Analysis</a></li>
+    <li><a href="#topics">Topics</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="https://www.linkedin.com/in/joesamowitz" target="_blank">LinkedIn</a></li>
+  </ul>
+</nav>
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <div class="masthead-flag">
+      <span class="flag-badge">Featured Work</span>
+      <span class="flag-sep">·</span>
+      <span class="flag-text">Policy Analysis &amp; Interactive Research</span>
+    </div>
+    <h1 class="masthead-title">Ideas at the<br><em>frontier of financial services.</em></h1>
+    <p class="masthead-deck">Original analysis on financial services regulation — stablecoins, model risk, bank supervision, and the policies shaping the future of American finance.</p>
+    <div class="masthead-meta">
+      <span><strong>Policy Analysis</strong> · Financial Services Regulation</span>
+      <span><strong>Washington, D.C.</strong></span>
+    </div>
+  </div>
+</header>
+
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-track">
+    <span class="ticker-item">Press Start to Pay <span class="ticker-sep">·</span></span>
+    <span class="ticker-item">Model Risk Management <span class="ticker-sep">·</span></span>
+    <span class="ticker-item">Bank M&amp;A Reform <span class="ticker-sep">·</span></span>
+    <span class="ticker-item">GENIUS Act <span class="ticker-sep">·</span></span>
+    <span class="ticker-item">AML/CFT <span class="ticker-sep">·</span></span>
+    <span class="ticker-item">Dual Banking System <span class="ticker-sep">·</span></span>
+    <span class="ticker-item">OCC Licensing <span class="ticker-sep">·</span></span>
+    <span class="ticker-item">AI in Finance <span class="ticker-sep">·</span></span>
+    <span class="ticker-item">Stablecoin Regulation <span class="ticker-sep">·</span></span>
+    <span class="ticker-item">FIL-15-2026 <span class="ticker-sep">·</span></span>
+    <span class="ticker-item">Press Start to Pay <span class="ticker-sep">·</span></span>
+    <span class="ticker-item">Model Risk Management <span class="ticker-sep">·</span></span>
+    <span class="ticker-item">Bank M&amp;A Reform <span class="ticker-sep">·</span></span>
+    <span class="ticker-item">GENIUS Act <span class="ticker-sep">·</span></span>
+    <span class="ticker-item">AML/CFT <span class="ticker-sep">·</span></span>
+    <span class="ticker-item">Dual Banking System <span class="ticker-sep">·</span></span>
+    <span class="ticker-item">OCC Licensing <span class="ticker-sep">·</span></span>
+    <span class="ticker-item">AI in Finance <span class="ticker-sep">·</span></span>
+    <span class="ticker-item">Stablecoin Regulation <span class="ticker-sep">·</span></span>
+    <span class="ticker-item">FIL-15-2026 <span class="ticker-sep">·</span></span>
+  </div>
+</div>
+
+<section id="works">
+  <div class="works-grid">
+
+    <!-- PRESS START TO PAY -->
+    <div class="work-card">
+      <div class="work-bar"></div>
+      <div class="preview-frame" id="press-frame" onclick="window.open('articles/press-start/index.html','_blank')">
+        <iframe id="press-preview" title="Press Start to Pay preview"></iframe>
+        <div class="preview-overlay">
+          <a class="open-btn" href="articles/press-start/index.html" target="_blank">⚡ Read Interactive Piece →</a>
+        </div>
+      </div>
+      <div class="work-body">
+        <div class="work-eyebrow">
+          <span class="work-tag">Stablecoins</span>
+          <span class="work-format">The Ledger · Interactive Narrative</span>
+          <span class="work-date">2026</span>
+        </div>
+        <h2 class="work-title">Press Start to Pay: Sony's OCC Filing and the Future of Platform Money</h2>
+        <p class="work-desc">A <em>Ledger</em>-style interactive long-read exploring Sony's application for a national trust charter and SEN Coin, its GENIUS Act payment stablecoin. Features 8 live figures: a float economics calculator, payment flow diagram, ecosystem map, content flywheel, personal yield model, demographic chart, and regulatory timeline.</p>
+        <div class="work-footer">
+          <a class="work-cta" href="articles/press-start/index.html" target="_blank">Read the piece →</a>
+          <span class="interactive-badge">⚡ 8 Live Figures</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- MRM GUIDANCE -->
+    <div class="work-card">
+      <div class="work-bar"></div>
+      <div class="preview-frame light" id="mrm-frame" onclick="window.open('articles/mrm-guidance/index.html','_blank')">
+        <iframe id="mrm-preview" title="MRM Guidance preview"></iframe>
+        <div class="preview-overlay">
+          <a class="open-btn" href="articles/mrm-guidance/index.html" target="_blank">⚡ Open Interactive Chart →</a>
+        </div>
+      </div>
+      <div class="work-body">
+        <div class="work-eyebrow">
+          <span class="work-tag">Model Risk</span>
+          <span class="work-format">Interactive Chart</span>
+          <span class="work-date">April 2026</span>
+        </div>
+        <h2 class="work-title">What Changed: The 2026 Revised Model Risk Management Guidance (FIL-15-2026)</h2>
+        <p class="work-desc">An interactive side-by-side comparison of the April 2026 interagency MRM guidance against SR 11-7 / FIL-22-2017 across eight dimensions — scope thresholds, the GenAI carve-out, non-enforceability posture, validation independence, testing calibration, third-party models, and governance. Includes a scannable "at a glance" summary grid.</p>
+        <div class="work-footer">
+          <a class="work-cta" href="articles/mrm-guidance/index.html" target="_blank">Explore the chart →</a>
+          <span class="interactive-badge">⚡ 8 Dimensions</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- THE EXAMINER WHO NEVER LEAVES -->
+    <div class="work-card">
+      <div class="work-bar"></div>
+      <div class="preview-frame" id="examiner-frame" onclick="window.open('articles/examiner/index.html','_blank')">
+        <iframe id="examiner-preview" title="The Examiner Who Never Leaves preview"></iframe>
+        <div class="preview-overlay">
+          <a class="open-btn" href="articles/examiner/index.html" target="_blank">⚡ Read Interactive Piece →</a>
+        </div>
+      </div>
+      <div class="work-body">
+        <div class="work-eyebrow">
+          <span class="work-tag">Supervision</span>
+          <span class="work-format">The Ledger · Interactive Narrative</span>
+          <span class="work-date">May 2031</span>
+        </div>
+        <h2 class="work-title">The Examiner Who Never Leaves: Real-Time API Supervision and the Future of Bank Oversight</h2>
+        <p class="work-desc">A <em>Ledger</em>-style long-read set in 2031, tracing the transformation of bank examination from periodic on-site visits to a permanent, AI-driven supervisory data feed. Six interactive figures explore the response time collapse from 187 to 11 days, a live supervisory dashboard, the intervention funnel shift, the burden relief for banks, the examiner's changing role, and what continuous data surveillance still can't see.</p>
+        <div class="work-footer">
+          <a class="work-cta" href="articles/examiner/index.html" target="_blank">Read the piece →</a>
+          <span class="interactive-badge">⚡ 6 Live Figures</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section id="analysis" class="analysis-section">
+  <div class="container">
+    <div class="section-label reveal">More Analysis</div>
+    <h2 class="section-title reveal">Recent Writing</h2>
+    <div class="posts-grid reveal">
+      <a href="#" class="post-card"><div class="post-meta"><span class="post-tag">Bank M&amp;A</span><span class="post-date">April 2026</span></div><h3 class="post-title">The Case for Modernizing HHI Analysis in Bank Merger Review</h3><p class="post-excerpt">As digital competition dissolves geographic market boundaries, concentration metrics no longer reflect the markets consumers actually inhabit.</p><div class="post-read">Read →</div></a>
+      <a href="#" class="post-card"><div class="post-meta"><span class="post-tag">AML/CFT</span><span class="post-date">Feb 2026</span></div><h3 class="post-title">What the 2026 FinCEN/FDIC Program Rule Proposals Mean for Community Banks</h3><p class="post-excerpt">Risk-based program requirements will reshape compliance obligations for state-chartered institutions with limited compliance infrastructure.</p><div class="post-read">Read →</div></a>
+      <a href="#" class="post-card"><div class="post-meta"><span class="post-tag">AI in Finance</span><span class="post-date">Jan 2026</span></div><h3 class="post-title">Agentic AI and the Supervised Institution: A Regulatory Framework That Doesn't Exist Yet</h3><p class="post-excerpt">As banks deploy autonomous AI in credit decisioning, the gap between supervisory expectations and operational reality is widening.</p><div class="post-read">Read →</div></a>
+      <a href="#" class="post-card"><div class="post-meta"><span class="post-tag">Dual Banking</span><span class="post-date">Dec 2025</span></div><h3 class="post-title">Preserving the Dual Banking System in an Era of Federal Preemption</h3><p class="post-excerpt">State regulator response — competitive analysis, parity advocacy, and coalition-building — as a case study in regulatory statecraft.</p><div class="post-read">Read →</div></a>
+      <a href="#" class="post-card"><div class="post-meta"><span class="post-tag">Stablecoins</span><span class="post-date">Nov 2025</span></div><h3 class="post-title">State vs. Federal: Who Should Regulate Payment Stablecoin Issuers?</h3><p class="post-excerpt">The GENIUS Act creates a federal floor — but state supervisory authority over stablecoin issuers remains unsettled.</p><div class="post-read">Read →</div></a>
+      <a href="#" class="post-card"><div class="post-meta"><span class="post-tag">BNPL</span><span class="post-date">Oct 2025</span></div><h3 class="post-title">Buy Now, Regulate Later: Fitting BNPL Into the Bank Oversight Framework</h3><p class="post-excerpt">New credit models and legacy bank oversight were not designed for each other. What a coherent framework would require.</p><div class="post-read">Read →</div></a>
+    </div>
+  </div>
+</section>
+
+<section id="topics" class="topics-section">
+  <div class="container" style="position:relative;z-index:2;">
+    <div class="section-label" style="color:var(--gold);">Policy Focus Areas</div>
+    <h2 class="section-title reveal">Where the work happens</h2>
+    <div class="topics-grid reveal">
+      <div class="topic-tile"><div class="topic-icon">⚖</div><div class="topic-name">Bank Mergers &amp; Acquisitions</div><div class="topic-desc">HHI modernization, expedited review thresholds, rural de minimis exceptions, and the OCC/Fed/FDIC interplay.</div></div>
+      <div class="topic-tile"><div class="topic-icon">🔍</div><div class="topic-name">AML/CFT Compliance</div><div class="topic-desc">FinCEN and FDIC program rule proposals, risk-based frameworks, and state-chartered institution obligations.</div></div>
+      <div class="topic-tile"><div class="topic-icon">💱</div><div class="topic-name">Stablecoins &amp; Payments</div><div class="topic-desc">Payment stablecoin regulation, OCC trust charters, GENIUS Act architecture, Fed master account access.</div></div>
+      <div class="topic-tile"><div class="topic-icon">🏛</div><div class="topic-name">Dual Banking System</div><div class="topic-desc">State vs. federal regulatory parity, the competitive landscape of bank chartering, and state regulator advocacy.</div></div>
+      <div class="topic-tile"><div class="topic-icon">🤖</div><div class="topic-name">AI &amp; Model Risk</div><div class="topic-desc">MRM guidance reform, agentic AI in supervised institutions, and emerging governance frameworks.</div></div>
+      <div class="topic-tile"><div class="topic-icon">📲</div><div class="topic-name">BNPL &amp; Embedded Finance</div><div class="topic-desc">Buy Now Pay Later regulatory gaps, embedded finance supervision, and new credit models in legacy oversight.</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="about" class="about-section">
+  <div class="container">
+    <div class="section-label reveal">About the Author</div>
+    <div class="about-grid reveal">
+      <div class="about-text">
+        <h2 class="section-title" style="margin-bottom:1.4rem;">Joey Samowitz</h2>
+        <p>The analysis and interactive work on this site is written and produced by <strong>Joey Samowitz</strong>, a financial services policy professional with nine years of experience at the intersection of state and federal bank regulation.</p>
+        <p>Joey is Senior Director of Policy Development at a leading state financial regulatory organization, where he leads a team crafting policy positions that directly inform action by state regulators across the country. He formerly represented state regulators on the FSOC digital assets working group.</p>
+        <p>His writing spans bank M&A reform, AML/CFT program design, payment stablecoin architecture, model risk governance, AI in supervised institutions, and the structural tensions of the dual banking system.</p>
+        <a href="https://www.linkedin.com/in/joesamowitz" target="_blank" style="display:inline-block;margin-top:1.2rem;background:var(--navy);color:var(--gold-light);padding:.72rem 1.8rem;font-size:.75rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;">Connect on LinkedIn →</a>
+      </div>
+      <div class="about-creds">
+        <div class="creds-title">Background</div>
+        <div class="cred-item"><div class="cred-role">Senior Director, Policy Development</div><div class="cred-org">State Financial Regulatory Organization</div><div class="cred-year">2017 — Present</div></div>
+        <div class="cred-item"><div class="cred-role">FSOC Digital Assets Working Group</div><div class="cred-org">State Regulator Representative</div><div class="cred-year">Former</div></div>
+        <div class="cred-item"><div class="cred-role">Graduate School of Banking at Colorado</div><div class="cred-org">Graduate</div></div>
+        <div class="cred-item"><div class="cred-role">MBA Candidate</div><div class="cred-org">University of Nebraska–Lincoln</div></div>
+        <div class="cred-item"><div class="cred-role">B.A., Criminology &amp; Criminal Justice</div><div class="cred-org">University of Maryland, College Park</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="subscribe-section">
+  <div class="container">
+    <div class="subscribe-inner reveal">
+      <div class="section-label" style="justify-content:center;margin-bottom:1rem;">Stay Informed</div>
+      <h2>Policy analysis, delivered.</h2>
+      <p>Subscribe for original writing on financial services regulation, state bank supervision, and the emerging issues shaping the future of American banking.</p>
+      <div class="sub-form">
+        <input type="email" placeholder="your@email.com" />
+        <button type="button">Subscribe</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">The Ledger</div>
+  <div class="footer-copy">© 2026 · Financial Services Policy Analysis · Joey Samowitz</div>
+  <div class="footer-socials">
+    <a href="https://www.linkedin.com/in/joesamowitz" target="_blank">LinkedIn</a>
+    <a href="#">X / Twitter</a>
+    <a href="mailto:">Contact</a>
+  </div>
+</footer>
+
+
+<script>
+// Scroll reveals
+const revObs = new IntersectionObserver((entries) => {
+  entries.forEach((e,i) => { if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*60);revObs.unobserve(e.target);}});
+},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>revObs.observe(el));
+
+// Static preview iframes (srcdoc — load instantly, no CDN needed)
+const PRESS_HTML = `<!DOCTYPE html><html><head><meta charset="UTF-8"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=DM+Sans:wght@400;600&display=swap" rel="stylesheet"/>
+<style>*{box-sizing:border-box;margin:0;padding:0;}body{font-family:Georgia,serif;background:#f5f0e8;color:#0d1f3c;}.top{background:#0d1f3c;border-bottom:3px solid #c9a84c;padding:11px 22px;display:flex;align-items:center;justify-content:space-between;}.logo{font-family:'Playfair Display',serif;font-weight:900;font-size:20px;font-style:italic;color:#e4c97a;}.sub{font-family:'DM Sans',sans-serif;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.35);}.strip{background:#162d52;padding:5px 22px;display:flex;justify-content:space-between;font-family:'DM Sans',sans-serif;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.5);}.hero{padding:28px 22px 24px;border-bottom:1px solid #d8d1c1;}.badges{display:flex;align-items:center;gap:7px;margin-bottom:12px;font-family:'DM Sans',sans-serif;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:#6b655b;}.bp{background:#0d1f3c;color:#e4c97a;padding:2px 7px;font-weight:700;font-size:9px;}.bg{color:#c9a84c;font-weight:700;}h1{font-family:'Playfair Display',serif;font-size:56px;font-weight:900;line-height:.92;letter-spacing:-.035em;color:#0d1f3c;margin-bottom:13px;}.deck{font-family:'Playfair Display',serif;font-size:14px;font-style:italic;color:#6b655b;line-height:1.45;max-width:580px;margin-bottom:18px;}.meta{display:flex;gap:18px;font-family:'DM Sans',sans-serif;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:#6b655b;padding-top:12px;border-top:1px solid #d8d1c1;}.meta strong{color:#0d1f3c;}.fig{background:#0d1f3c;margin:16px 22px;padding:18px;position:relative;}.fig::before{content:'';position:absolute;top:0;left:0;width:36px;height:4px;background:#c9a84c;}.fl{font-family:'DM Sans',sans-serif;font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:#c9a84c;font-weight:700;margin-bottom:7px;margin-top:4px;}.ft{font-family:'Playfair Display',serif;font-size:15px;font-weight:700;color:#fff;margin-bottom:5px;}.sliders{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:14px;}.sl label{display:block;font-family:'DM Sans',sans-serif;font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:3px;}.sv{font-family:'Playfair Display',serif;font-size:17px;color:#e4c97a;font-weight:700;}.st{height:2px;background:rgba(255,255,255,.18);margin-top:5px;position:relative;}.sf{height:2px;background:#c9a84c;}.sth{width:12px;height:12px;border-radius:50%;background:#c9a84c;border:2px solid white;position:absolute;top:-5px;}.rrow{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid rgba(201,168,76,.2);}.rc{padding:10px 12px;border-left:1px solid rgba(201,168,76,.15);}.rc:first-child{border-left:none;}.rl{font-family:'DM Sans',sans-serif;font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:5px;}.rv{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;}.rs{font-family:Georgia,serif;font-size:10px;color:rgba(255,255,255,.4);font-style:italic;margin-top:3px;}</style>
+</head><body>
+<div class="top"><div class="logo">The Ledger</div><div class="sub">Policy · Finance · Analysis</div></div>
+<div class="strip"><span>Payments &amp; Digital Finance</span><span>Interactive Edition · 2027</span></div>
+<div class="hero">
+<div class="badges"><span class="bp">Briefing</span><span>·</span><span>Payments &amp; Digital Finance</span><span>·</span><span class="bg">Interactive</span></div>
+<h1>Press start<br>to pay</h1>
+<div class="deck">Sony's application for a national trust charter is under active review at the OCC. If approved, it will be the first time an entertainment conglomerate has been granted powers to issue its own regulated digital dollar.</div>
+<div class="meta"><span><strong>Tokyo</strong> · New York · Washington, D.C.</span><span>11-minute read</span><span>8 interactive figures</span></div>
+</div>
+<div class="fig">
+<div class="fl">Interactive · Figure 1</div>
+<div class="ft">The monetisation of trust</div>
+<div class="sliders">
+<div class="sl"><label>Circulating supply</label><div class="sv">$5.0bn</div><div class="st"><div class="sf" style="width:22%"></div><div class="sth" style="left:20%"></div></div></div>
+<div class="sl"><label>T-bill yield</label><div class="sv">4.30%</div><div class="st"><div class="sf" style="width:62%"></div><div class="sth" style="left:60%"></div></div></div>
+<div class="sl"><label>Rewards share</label><div class="sv">15%</div><div class="st"><div class="sf" style="width:35%"></div><div class="sth" style="left:33%"></div></div></div>
+</div>
+<div class="rrow">
+<div class="rc"><div class="rl">Total reserve income</div><div class="rv" style="color:rgba(255,255,255,.9)">$215m</div><div class="rs">per year, pre-rewards</div></div>
+<div class="rc"><div class="rl">Sony retains</div><div class="rv" style="color:#c9a84c">$183m</div><div class="rs">85% of float yield</div></div>
+<div class="rc"><div class="rl">Interchange avoided</div><div class="rv" style="color:#e4c97a">$520m</div><div class="rs">on-platform, at 2%</div></div>
+</div>
+</div>
+</body></html>`;
+
+const MRM_HTML = `<!DOCTYPE html><html><head><meta charset="UTF-8"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>*{box-sizing:border-box;margin:0;padding:0;}body{font-family:Georgia,serif;background:#0d1f3c;color:#faf7f2;}.hdr{border-bottom:3px solid #c9a84c;padding:14px 22px 12px;display:flex;align-items:center;justify-content:space-between;}.logo{font-family:'Playfair Display',serif;font-weight:900;font-size:20px;font-style:italic;color:#e4c97a;}.sub{font-family:'DM Sans',sans-serif;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.35);}.strip{background:#162d52;padding:5px 22px;display:flex;justify-content:space-between;font-family:'DM Sans',sans-serif;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:20px;}.title-area{padding:18px 22px 14px;border-bottom:1px solid rgba(201,168,76,.25);}.ey{font-family:'DM Sans',sans-serif;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:#c9a84c;font-weight:600;margin-bottom:8px;}h1{font-family:'Playfair Display',serif;font-size:24px;font-weight:700;line-height:1.1;letter-spacing:-.02em;margin-bottom:8px;color:#faf7f2;}.dk{font-family:'DM Sans',sans-serif;font-size:11px;color:rgba(255,255,255,.5);line-height:1.5;}.body{display:grid;grid-template-columns:220px 1fr;gap:20px;padding:18px 22px;}.sl-label{font-family:'DM Sans',sans-serif;font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.35);font-weight:600;margin-bottom:9px;padding-left:12px;}.dl{border-left:1px solid rgba(201,168,76,.25);}.dr{padding:10px 12px;border-bottom:1px solid rgba(201,168,76,.15);display:flex;align-items:center;gap:7px;cursor:pointer;}.dr.a{background:#c9a84c;color:#0d1f3c;}.dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}.dn{font-family:'Playfair Display',serif;font-size:12px;font-weight:500;flex:1;}.ds{font-family:'DM Sans',sans-serif;font-size:9px;color:rgba(255,255,255,.4);margin-top:1px;}.dr.a .ds{color:rgba(13,31,60,.6);}.cb{display:inline-block;font-family:'DM Sans',sans-serif;font-size:8px;letter-spacing:.18em;text-transform:uppercase;font-weight:600;color:#c9a84c;padding:2px 7px;border:1px solid #c9a84c;}.dt{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;line-height:1.15;margin:10px 0 3px;color:#faf7f2;}.di{font-size:13px;font-style:italic;color:rgba(255,255,255,.5);margin-bottom:15px;}.cards{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:rgba(201,168,76,.2);}.card{padding:14px;background:#162d52;}.card.af{background:#1e3d6e;border-left:3px solid #c9a84c;}.cl{font-family:'DM Sans',sans-serif;font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.4);font-weight:600;margin-bottom:3px;}.cl.af{color:#c9a84c;}.cs{font-size:11px;font-weight:600;color:rgba(255,255,255,.7);margin-bottom:10px;}.ct{font-size:12px;line-height:1.5;color:rgba(255,255,255,.8);}.why{margin-top:13px;padding:12px 14px;border-left:3px solid #c9a84c;}.wl{font-family:'DM Sans',sans-serif;font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.35);font-weight:600;margin-bottom:3px;}.wt{font-size:12px;font-style:italic;color:rgba(255,255,255,.7);line-height:1.4;}</style>
+</head><body>
+<div class="hdr"><div class="logo">The Ledger</div><div class="sub">Policy · Finance · Analysis</div></div>
+<div class="strip"><span style="color:rgba(255,255,255,.6)">Supervisory Guidance · Model Risk</span><span>FIL-15-2026 · April 17, 2026</span></div>
+<div class="title-area"><div class="ey">FIL-15-2026 · Interagency Supervisory Guidance</div><h1>Revised Model Risk Management Guidance</h1><div class="dk">Issued April 17, 2026 by the FDIC, OCC, and Federal Reserve. A side-by-side comparison across eight dimensions.</div></div>
+<div class="body">
+<div><div class="sl-label">Eight dimensions</div><div class="dl">
+<div class="dr a"><span class="dot" style="background:#0d1f3c"></span><div><div class="dn">Scope &amp; Applicability</div><div class="ds">From universal to tailored</div></div></div>
+<div class="dr"><span class="dot" style="background:#c9a84c"></span><div><div class="dn">Definition of 'Model'</div><div class="ds">Narrower, with AI carve-out</div></div></div>
+<div class="dr"><span class="dot" style="background:#c9a84c"></span><div><div class="dn">Enforceability Posture</div><div class="ds">Non-enforceable, stated plainly</div></div></div>
+<div class="dr"><span class="dot" style="background:#b8924a"></span><div><div class="dn">Validation Rigor</div><div class="ds">Effectiveness over structure</div></div></div>
+<div class="dr"><span class="dot" style="background:#b8924a"></span><div><div class="dn">Testing &amp; Development</div><div class="ds">Scaled to materiality</div></div></div>
+<div class="dr"><span class="dot" style="background:rgba(255,255,255,.5)"></span><div><div class="dn">Vendor &amp; Third-Party</div><div class="ds">Core principles preserved</div></div></div>
+<div class="dr"><span class="dot" style="background:#b8924a"></span><div><div class="dn">Governance</div><div class="ds">Less prescriptive phrasing</div></div></div>
+</div></div>
+<div><div class="cb">Material change</div><div class="dt">Scope &amp; Applicability</div><div class="di">From universal to tailored</div>
+<div class="cards">
+<div class="card"><div class="cl">Before</div><div class="cs">SR 11-7 / FIL-22-2017</div><div class="ct">Applied broadly to all banking organizations using models, with qualitative size-based expectations. Scope was principles-based but not formally threshold-based.</div></div>
+<div class="card af"><div class="cl af">After</div><div class="cs">2026 Revised Guidance</div><div class="ct">Explicitly most relevant to banking organizations over $30 billion in total assets. Generally excludes institutions at or below $30B unless they have significant model risk exposure.</div></div>
+</div>
+<div class="why"><div class="wl">Why it matters</div><div class="wt">Formalizes a tailored supervisory approach and gives community banks an explicit carve-out.</div></div>
+</div>
+</div>
+</body></html>`;
+
+const EXAMINER_HTML = `<!DOCTYPE html><html><head><meta charset="UTF-8"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=DM+Sans:wght@400;600&display=swap" rel="stylesheet"/>
+<style>*{box-sizing:border-box;margin:0;padding:0;}body{font-family:Georgia,serif;background:#F5EFE1;color:#1A1814;}.top{background:#0F2A44;border-bottom:3px solid #C8A44D;padding:14px 22px;display:flex;align-items:baseline;gap:14px;}.logo{font-family:'Playfair Display',serif;font-weight:900;font-size:22px;color:#F5EFE1;letter-spacing:-.02em;}.sub{font-family:'DM Sans',sans-serif;font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:#C8A44D;border-left:1px solid #C8A44D;padding-left:10px;}.strip{background:#081A2D;padding:6px 22px;display:flex;justify-content:space-between;font-family:'DM Sans',sans-serif;font-size:9px;letter-spacing:.22em;text-transform:uppercase;}.strip .s1{color:#E5C87A;}.strip .s2{color:rgba(245,239,225,.4);}.hero{padding:30px 22px 26px;border-bottom:1px solid #D9CFB8;background:linear-gradient(180deg,#F5EFE1 0%,#EBE2CE 100%);}.badges{display:flex;align-items:center;gap:8px;margin-bottom:14px;font-family:'DM Sans',sans-serif;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:#6B6354;}.bp{background:#0F2A44;color:#C8A44D;padding:3px 9px;font-weight:700;}.bg{color:#A88534;font-weight:700;}h1{font-family:'Playfair Display',serif;font-size:52px;font-weight:900;line-height:.92;letter-spacing:-.035em;color:#0F2A44;margin-bottom:14px;}.gold{color:#C8A44D;}.deck{font-family:'Playfair Display',serif;font-size:14px;font-style:italic;color:#6B6354;line-height:1.45;max-width:580px;margin-bottom:18px;}.meta{display:flex;gap:18px;font-family:'DM Sans',sans-serif;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:#6B6354;padding-top:12px;border-top:1px solid #D9CFB8;}.meta strong{color:#0F2A44;}.fig{background:#0F2A44;margin:16px 22px 0;padding:18px;position:relative;}.fig::before{content:'';position:absolute;top:0;left:0;width:40px;height:4px;background:#C8A44D;}.fl{font-family:'DM Sans',sans-serif;font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:#C8A44D;font-weight:700;margin-top:4px;margin-bottom:7px;}.ft{font-family:'Playfair Display',serif;font-size:15px;font-weight:700;color:#F5EFE1;margin-bottom:4px;}.fd{font-family:Georgia,serif;font-size:11px;font-style:italic;color:rgba(245,239,225,.6);margin-bottom:14px;}.panels{display:grid;grid-template-columns:1fr 1fr;gap:10px;}.panel{padding:14px;}.panel.old{background:rgba(154,42,42,.12);border:1px solid rgba(154,42,42,.3);}.panel.new{background:rgba(200,164,77,.12);border:1px solid #C8A44D;}.pl{font-family:'DM Sans',sans-serif;font-size:8px;letter-spacing:.2em;text-transform:uppercase;margin-bottom:6px;}.pl.old{color:#FF8A8A;}.pl.new{color:#C8A44D;}.pn{font-family:'Playfair Display',serif;font-size:48px;font-weight:900;line-height:1;letter-spacing:-.04em;}.pn.old{color:#FFBDBD;}.pn.new{color:#E5C87A;}.pu{font-family:'DM Sans',sans-serif;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(245,239,225,.6);margin-top:3px;}.bar{height:6px;margin-top:12px;background:rgba(245,239,225,.08);}.bf{height:6px;}.bf.old{background:linear-gradient(90deg,#9A2A2A,#FF8A8A);width:100%;}.bf.new{background:linear-gradient(90deg,#A88534,#C8A44D);width:5.9%;}</style>
+</head><body>
+<div class="top"><div class="logo">The Ledger</div><div class="sub">Est. 2026 · Interactive Edition</div></div>
+<div class="strip"><span class="s1">Banking Regulation</span><span class="s2">Vol. VI · № 05 · May 2031</span></div>
+<div class="hero">
+<div class="badges"><span class="bp">Briefing</span><span>Supervision</span><span class="bg">· Interactive</span></div>
+<h1>The examiner<br>who <span class="gold">never leaves</span></h1>
+<div class="deck">Real-time API supervision has transformed bank regulation. Safety and soundness have improved dramatically. The profession is still adjusting to what that means.</div>
+<div class="meta"><span><strong>Washington, D.C.</strong> · Kansas City · Columbus</span><span>16-min read</span><span>6 interactive figures</span></div>
+</div>
+<div class="fig">
+<div class="fl">Figure 1 · The headline number</div>
+<div class="ft">From 187 days to 11</div>
+<div class="fd">Median time between a deteriorating metric first appearing in the data and a formal supervisory response.</div>
+<div class="panels">
+<div class="panel old"><div class="pl old">Periodic examination</div><div class="pn old">187</div><div class="pu">days (median)</div><div class="bar"><div class="bf old"></div></div></div>
+<div class="panel new"><div class="pl new">Continuous supervision</div><div class="pn new">11</div><div class="pu">days (median)</div><div class="bar"><div class="bf new"></div></div></div>
+</div>
+</div>
+</body></html>`;
+
+document.getElementById('press-preview').srcdoc = PRESS_HTML;
+document.getElementById('mrm-preview').srcdoc = MRM_HTML;
+document.getElementById('examiner-preview').srcdoc = EXAMINER_HTML;
+</script>
+</body>
+</html>
